@@ -43,33 +43,33 @@ function onReset() {
 
 function onClick(e) {
   if (nMines != null) {
-  let tg = e.target.closest('div');
-  if (initialize == false) {
-    generateMines(nMines, tg.x, tg.y);
-    initialize = true;
-  }
-  if (gameOver || tg.flag == true || tg.classList.contains('show')) {
-    return;
-  }
-  if (tg.value == 'm') {
-    tg.innerHTML = `<img src="./imagesMineSweeper/bomb.jpg">`
-  } else {
-    tg.textContent = tg.value;
-  }
-  tg.classList.add('show');
-  if (tg.value == 'm') {
-    alert('You lose!');
-    gameOver = true;
+    let tg = e.target.closest('div');
+    if (initialize == false) {
+      generateMines(nMines, tg.x, tg.y);
+      initialize = true;
+    }
+    if (gameOver || tg.flag == true || tg.classList.contains('show')) {
+      return;
+    }
+    if (tg.value == 'm') {
+      tg.innerHTML = `<img src="./imagesMineSweeper/bomb.jpg">`
+    } else {
+      tg.textContent = tg.value;
+    }
+    tg.classList.add('show');
+    if (tg.value == 'm') {
+      alert('You lose!');
+      gameOver = true;
 	  btnReset.disabled = 
-    false;
+      false;
+    }
+    if (!tg.value){
+      showAll(tg);
+    }
   }
-  if (!tg.value){
-    showAll(tg);
-  }
-}
 }
 
-function onRightClick(e){
+function onRightClick(e) {
   e.preventDefault();
   let tg = e.target;
   let div = tg.closest('div');
@@ -88,6 +88,7 @@ function onRightClick(e){
     div.innerHTML='';
   }
 }
+
 function showAll(tg) {
   let x = tg.x, y = tg.y;
   tg.textContent = tg.value;
@@ -120,17 +121,17 @@ function generateMines(n, x, y) {
   mines.length = 0;
   for(let i = 0; i < n; i++){
     let element;
-    do{
+    do {
       let ndx = generateTheNumber(0, counter - 1);
       element = game.children[ndx];
-    }while(element.value || (element.x == x && element.y == y))
+    } while(element.value || (element.x == x && element.y == y))
     element.value='m';
     mines.push(element);
   }
   generateTheNeighbors(mines);
 }
 
-function generateTheNeighbors(mines){
+function generateTheNeighbors(mines) {
   let line, column, val;
   mines.forEach( e => {
     line = e.y;
